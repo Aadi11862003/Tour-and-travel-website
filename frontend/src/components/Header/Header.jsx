@@ -20,7 +20,12 @@ const nav__links = [
     path: "/tours",
     display: "Tours",
   },
+  {
+    path: "/admin",
+    display: "Admin",
+  },
 ];
+
 const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
@@ -50,8 +55,8 @@ const Header = () => {
   useEffect(() => {
     stickyHeaderFunc();
 
-    return window.removeEventListener("scroll", stickyHeaderFunc);
-  });
+    return () => window.removeEventListener("scroll", stickyHeaderFunc);
+  }, []);
 
   const toggleMenu = () => menuRef.current?.classList.toggle("show__menu");
 
@@ -60,13 +65,12 @@ const Header = () => {
       <Container>
         <Row>
           <div className="nav__wrapper d-flex align-items-center justify-content-between">
-            {/* ===== logo start ===== */}
+            {/* Logo */}
             <div className="logo">
-              <img src={logo} alt="" />
+              <img src={logo} alt="logo" />
             </div>
-            {/* ===== logo end ===== */}
 
-            {/* ===== menu start ===== */}
+            {/* Navigation Links */}
             <div className="navigation" ref={menuRef} onClick={toggleMenu}>
               <ul className="menu d-flex align-items-center gap-5">
                 {nav__links.map((item, index) => (
@@ -83,31 +87,22 @@ const Header = () => {
                 ))}
               </ul>
             </div>
-            {/* ===== menu end ===== */}
 
+            {/* Auth buttons */}
             <div className="nav__right d-flex align-items-center gap-4">
-              <div className="nav__btns d-flex align-items-center gap-2">
-                {user ? (
-                  <>
-                    <span className="username d-flex align-items-center gap-1">
-                      <i className="ri-user-line"></i>
-                      {user.name}
-                    </span>
-                    <Button className="btn btn-dark" onClick={logout}>
-                      Logout
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button className="btn secondary__btn">
-                      <Link to="/login">Login</Link>
-                    </Button>
-                    <Button className="btn primary__btn">
-                      <Link to="/register">Register</Link>
-                    </Button>
-                  </>
-                )}
-              </div>
+              {user && user.name && (
+                <h5 className="mb-0 user-name">Welcome, {user.name}</h5>
+              )}
+              {user ? (
+                <Button className="btn btn-dark" onClick={logout}>
+                  Logout
+                </Button>
+              ) : (
+                <Button className="btn btn-dark">
+                  <Link to="/login">Login</Link>
+                </Button>
+              )}
+
               <span className="mobile__menu" onClick={toggleMenu}>
                 <i className="ri-menu-line"></i>
               </span>

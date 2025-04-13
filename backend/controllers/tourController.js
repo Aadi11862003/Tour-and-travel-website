@@ -1,57 +1,34 @@
 import Tour from '../models/tourModel.js';
 
-// Create new tour
+// Create a new tour
 export const createTour = async (req, res) => {
   try {
     const newTour = await Tour.create(req.body);
-    res.status(200).json({
-      success: true,
-      message: 'Successfully created tour',
-      data: newTour
-    });
+    res.status(201).json({ success: true, message: 'Tour created successfully', data: newTour });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Update tour
+// Update an existing tour
 export const updateTour = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   try {
-    const updatedTour = await Tour.update(req.body, {
-      where: { id },
-      returning: true
-    });
-    res.status(200).json({
-      success: true,
-      message: 'Successfully updated tour',
-      data: updatedTour[1][0]
-    });
+    const updatedTour = await Tour.update(req.body, { where: { id }, returning: true });
+    res.status(200).json({ success: true, message: 'Tour updated successfully', data: updatedTour[1][0] });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Delete tour
+// Delete a tour
 export const deleteTour = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   try {
     await Tour.destroy({ where: { id } });
-    res.status(200).json({
-      success: true,
-      message: 'Successfully deleted tour'
-    });
+    res.status(200).json({ success: true, message: 'Tour deleted successfully' });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 

@@ -16,7 +16,7 @@ const { totalRating, avgRating } = calculateAvgRating(reviews)
   };
 
   const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/300x200?text=Tour+Image'; // Fallback image
+    e.target.src = ''; // Fallback image
     setImageLoading(false);
   };
 

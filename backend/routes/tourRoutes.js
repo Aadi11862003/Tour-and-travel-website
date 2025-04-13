@@ -19,4 +19,4 @@ router.get('/', getAllTours);
 router.get('/search/getFeaturedTours', getFeaturedTours);
 router.get('/search/getTourCount', getTourCount);
 
-export default router; 
+export default router;
